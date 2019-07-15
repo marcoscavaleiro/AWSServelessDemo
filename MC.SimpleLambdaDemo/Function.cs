@@ -27,7 +27,7 @@ namespace MC.SimpleLambda
         /// </summary>
         /// <param name="request"></param>
         /// <returns>The list of blogs</returns>
-        public APIGatewayProxyResponse GetCode(APIGatewayProxyRequest request, ILambdaContext context)
+        public APIGatewayProxyResponse GetAll(APIGatewayProxyRequest request, ILambdaContext context)
         {
             context.Logger.LogLine("Get Request\n");
             List<string> retorno = new List<string>();
@@ -39,6 +39,49 @@ namespace MC.SimpleLambda
             {
                 StatusCode = (int)HttpStatusCode.OK,
                 Body = JsonConvert.SerializeObject(retorno),
+                Headers = new Dictionary<string, string> { { "Content-Type", "text/json" } }
+            };
+
+            return response;
+        }
+
+        public APIGatewayProxyResponse GetOne(APIGatewayProxyRequest request, ILambdaContext context)
+        {
+            context.Logger.LogLine("Get Request\n");
+
+            var response = new APIGatewayProxyResponse
+            {
+                StatusCode = (int)HttpStatusCode.OK,
+                Body = JsonConvert.SerializeObject(Guid.NewGuid().ToString()),
+                Headers = new Dictionary<string, string> { { "Content-Type", "text/json" } }
+            };
+
+            return response;
+        }
+
+
+        public APIGatewayProxyResponse GetCoupon(APIGatewayProxyRequest request, ILambdaContext context)
+        {
+            context.Logger.LogLine("Get Request\n");
+            int size;
+            var response = new APIGatewayProxyResponse();
+            if (!int.TryParse(request.QueryStringParameters["size"], out size) || size <= 4)
+            {
+                response = new APIGatewayProxyResponse
+
+                {
+                    StatusCode = (int)HttpStatusCode.BadRequest,
+                    Body = JsonConvert.SerializeObject("Invalid size, must be >=4"),
+                    Headers = new Dictionary<string, string> { { "Content-Type", "text/json" } }
+                };
+                return response;
+
+            }
+
+            response = new APIGatewayProxyResponse
+            {
+                StatusCode = (int)HttpStatusCode.OK,
+                Body = JsonConvert.SerializeObject(MC.SimpleLambda.Utils.GetUniqueKey(size)),
                 Headers = new Dictionary<string, string> { { "Content-Type", "text/json" } }
             };
 

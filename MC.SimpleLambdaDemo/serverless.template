@@ -5,10 +5,10 @@
 
 	"Resources" : {
 
-		"Get" : {
+		"GetAll" : {
 		"Type" : "AWS::Serverless::Function",
 			"Properties": {
-				"Handler": "MC.SimpleLambda::MC.SimpleLambda.Functions::GetCode",
+				"Handler": "MC.SimpleLambda::MC.SimpleLambda.Functions::GetAll",
 				"Runtime": "dotnetcore2.1",
 				"CodeUri": "",
 				"MemorySize": 256,
@@ -19,14 +19,57 @@
 					"PutResource": {
 						"Type": "Api",
 						"Properties": {
-							"Path": "/",
+							"Path": "/getall",
 							"Method": "GET"
 						}
 					}
 				}
 			}
-		}
+		},
+		"Get" : {
+		"Type" : "AWS::Serverless::Function",
+			"Properties": {
+				"Handler": "MC.SimpleLambda::MC.SimpleLambda.Functions::GetOne",
+				"Runtime": "dotnetcore2.1",
+				"CodeUri": "",
+				"MemorySize": 256,
+				"Timeout": 30,
+				"Role": null,
+				"Policies": [ "AWSLambdaBasicExecutionRole" ],
+				"Events": {
+					"PutResource": {
+						"Type": "Api",
+						"Properties": {
+							"Path": "/getone",
+							"Method": "GET"
+						}
+					}
+				}
+			}
 
+		},
+		"GetCoupon" : {
+		"Type" : "AWS::Serverless::Function",
+			"Properties": {
+				"Handler": "MC.SimpleLambda::MC.SimpleLambda.Functions::GetCoupon",
+				"Runtime": "dotnetcore2.1",
+				"CodeUri": "",
+				"MemorySize": 256,
+				"Timeout": 30,
+				"Role": null,
+				"Policies": [ "AWSLambdaBasicExecutionRole" ],
+				"Events": {
+					"PutResource": {
+						"Type": "Api",
+						"Properties": {
+							"Path": "/coupon",
+
+							"Method": "GET"
+						}
+					}
+				}
+			}
+			}
 	},
 
 	"Outputs" : {
