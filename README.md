@@ -20,7 +20,7 @@ Demo: https://ea9vompxnc.execute-api.sa-east-1.amazonaws.com/Prod/getone
 ## /coupon?size=
 This one will generate one random string code with the size you pass in parameter
 If you pass an value smaller or equal zero, will return Bad Request(400)
-If yu pass an not a number parameter, will return Bad Request(400) 
+If you pass an value and is not a number parameter, will return Bad Request(400) 
 
 Demo: https://ea9vompxnc.execute-api.sa-east-1.amazonaws.com/Prod/coupon?size=5
 
